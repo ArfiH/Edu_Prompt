@@ -17,7 +17,6 @@ import {
   getHelpByCaption,
   getFlashcards,
 } from "../groq";
-import SplitPane from "react-split-pane";
 
 const getSubtitles = async (videoId) => {
   const res = await axios.get(`http://localhost:5000/api/subtitles/${videoId}`);
@@ -397,12 +396,7 @@ function Video() {
       <main>
         <div className="container">
           <div className="content-wrapper">
-            <SplitPane
-              performanceMode={true}
-              style={{ position: "static", marginBottom: "-2.96rem" }}
-              split="vertical"
-              defaultSize="50%"
-            >
+            <div>
               <div className="video-section mt-8 min-w-20">
                 <ReactPlayer
                   className="aspect-video rounded-xl overflow-hidden"
@@ -442,7 +436,7 @@ function Video() {
                   />
                 </div>
               </div>
-            </SplitPane>
+            </div>
           </div>
 
           <div className="ai-tools">

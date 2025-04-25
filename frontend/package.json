@@ -25,7 +25,6 @@
     "react-player": "^2.16.0",
     "react-quiz-component": "^0.9.1",
     "react-router-dom": "^7.4.0",
-    "react-split-pane": "^0.1.92",
     "tailwindcss": "^4.0.15"
   },
   "devDependencies": {
