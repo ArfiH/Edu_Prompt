@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getVideos } from "../api/youtube";
+import { getVideos } from "../youtube"
 import Card from "../component/Card";
 import SearchBar from "../component/SearchBar";
 

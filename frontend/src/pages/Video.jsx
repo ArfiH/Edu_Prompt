@@ -9,14 +9,14 @@ import "./splitPaneStyles.css";
 import "./Video.css";
 import useWatchTracker from "../hooks/watchTracker";
 
-import { getVideoByID } from "../api/youtube";
+import { getVideoByID } from "../youtube";
 
 import {
   getQuizByCaption,
   getSummary,
   getHelpByCaption,
   getFlashcards,
-} from "../api/groq";
+} from "../groq";
 import SplitPane from "react-split-pane";
 
 const getSubtitles = async (videoId) => {
