@@ -18,7 +18,7 @@ const SearchBar = () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:${PORT}/api/suggestions?q=${encodeURIComponent(searchTerm)}`);
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/suggestions?q=${encodeURIComponent(searchTerm)}`);
       console.log(response);
       const data = await response.json();
       console.log(data);

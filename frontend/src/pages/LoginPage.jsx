@@ -9,7 +9,7 @@ export default function LoginPage() {
 
   const handleLogin = async () => {
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/signin", {
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/signin`, {
         email,
         password,
       });
@@ -24,7 +24,7 @@ export default function LoginPage() {
 
   const handleGuestLogin = async () => {
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/guest");
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/guest`);
       localStorage.setItem("token", res.data.token);
       navigate("/guest");
     } catch (err) {

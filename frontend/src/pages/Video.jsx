@@ -19,7 +19,7 @@ import {
 } from "../groq";
 
 const getSubtitles = async (videoId) => {
-  const res = await axios.get(`http://localhost:5000/api/subtitles/${videoId}`);
+  const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/subtitles/${videoId}`);
   console.log("Response while fetching subtitles: " + res.data);
   return res.data.subtitles;
 };
@@ -117,7 +117,7 @@ function Video() {
     const fetchNote = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get(`http://localhost:5000/api/notes/${id}`, {
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/notes/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

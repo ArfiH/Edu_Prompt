@@ -7,7 +7,7 @@ const useWatchTracker = (videoId, videoTitle, token) => {
     const trackWatch = async () => {
       try {
         await axios.post(
-          "http://localhost:5000/api/watch",
+          `${import.meta.env.VITE_BACKEND_URL}/api/watch`,
           { videoId, title: videoTitle },
           { headers: { Authorization: `Bearer ${token}` } }
         );

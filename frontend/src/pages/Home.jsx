@@ -15,7 +15,7 @@ function Home() {
   useEffect(() => {
     const fetchWatchHistory = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/watch", {
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/watch`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
@@ -34,7 +34,7 @@ function Home() {
   useEffect(() => {
     const fetchNotes = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/notes", {
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/notes`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
