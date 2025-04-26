@@ -48,8 +48,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/notes", noteRoutes);
 app.use('/api/watch', watchRoutes);
 
-app.listen(PORT, () => {
-  console.log(`✅ Server running at http://localhost:${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`✅ Server running at http://localhost:${PORT}`);
+// });
 
 export default app;
