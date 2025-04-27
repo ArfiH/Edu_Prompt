@@ -13,10 +13,10 @@ dotenv.config();
 
 const app = express();
 app.use(cors({
-  origin: "*", // Replace "*" with your frontend URL in production
+  origin: ["http://localhost:5173","https://edu-prompt1.vercel.app"],
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
-}));
+})); // Allow CORS for all origins and methods
 app.use(express.json());
 
 const PORT = process.env.VITE_SERVER_PORT || 5000;
