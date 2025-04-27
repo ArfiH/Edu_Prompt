@@ -36,7 +36,7 @@ function Video() {
   const [summary, setSummary] = useState("");
   const [help, setHelp] = useState(null);
   const [flashcards, setFlashcards] = useState(null);
-  const [extraActiveIndex, setExtraActiveIndex] = useState(0);
+  const [extraActiveIndex, setExtraActiveIndex] = useState(2);
   const [isLoading, setIsLoading] = useState(true);
   const [caption, setCaption] = useState("");
   const [noteTitle, setNoteTitle] = useState("My Note");

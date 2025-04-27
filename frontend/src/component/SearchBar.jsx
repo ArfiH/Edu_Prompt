@@ -53,7 +53,7 @@ const SearchBar = () => {
       if (activeIndex >= 0 && suggestions[activeIndex]) {
         setQuery(suggestions[activeIndex]);
         setSuggestions([]);
-        window.location.href = `http://localhost:5173/result/${suggestions[activeIndex]}`;
+        window.location.href = `${import.meta.env.VITE_FRONTEND_URL}/result/${suggestions[activeIndex]}`;
       }
     } else if (e.key === "Escape") {
       setSuggestions([]);
@@ -63,7 +63,7 @@ const SearchBar = () => {
   const handleSelect = (suggestion) => {
     setQuery(suggestion);
     setSuggestions([]);
-    window.location.href = `http://localhost:5173/result/${suggestion}`;
+    window.location.href = `h${import.meta.env.VITE_FRONTEND_URL}/result/${suggestion}`;
   };
 
   // Click outside to close

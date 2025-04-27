@@ -12,6 +12,14 @@ function Home() {
 
   const token = localStorage.getItem("token");
   console.log(token);
+
+  if (!token) {
+    console.log("No token found in local storage.");
+    // Redirect to login page with meaningful message
+    window.location.href = `${import.meta.env.VITE_FRONTEND_URL}/sign-in`;
+    // window.location.href = "/sign-in?message=Please log in to access this page.";
+
+  }
   useEffect(() => {
     const fetchWatchHistory = async () => {
       try {
