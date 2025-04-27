@@ -64,7 +64,7 @@ function Extras({ index, setIndex, quiz, summary, help, flashcards }) {
             <Summary summary={summary} />
           ) : (
             <div className="text-center text-gray-500 p-4">
-              <p>Click AI Summary</p>
+              <p>Loading AI Summary</p>
             </div>
           ))}
         {index === 1 &&
@@ -72,7 +72,7 @@ function Extras({ index, setIndex, quiz, summary, help, flashcards }) {
             <CustomQuiz quiz={quiz} />
           ) : (
             <div className="text-center text-gray-500 p-4">
-              <p>Click AI Quiz</p>
+              <p>Loading AI Quiz</p>
             </div>
           ))}
         {index === 2 ? <GroqChat help={help} /> : null}
@@ -81,7 +81,7 @@ function Extras({ index, setIndex, quiz, summary, help, flashcards }) {
             <Flashcard flashcards={flashcards} />
           ) : (
             <div className="text-center text-gray-500 p-4">
-              <p>Click AI Flashcards</p>
+              <p>Loading AI Flashcards</p>
             </div>
           ))}
       </div>

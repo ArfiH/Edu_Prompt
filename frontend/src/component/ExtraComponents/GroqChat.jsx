@@ -23,12 +23,12 @@ export default function GroqChat({ help }) {
     const input = userInput.toLowerCase();
     return (
       input.includes("video") ||
-      input.includes("as given above") ||
-      input.includes("in this topic") ||
-      input.includes("above content") ||
-      input.includes("this lecture") ||
-      input.includes("the lesson") ||
-      input.includes("this tutorial")
+      input.includes("above") ||
+      input.includes("topic") ||
+      input.includes("content") ||
+      input.includes("this") ||
+      input.includes("lesson") ||
+      input.includes("tutorial")
     );
   };
 
