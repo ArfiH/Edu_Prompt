@@ -8,7 +8,7 @@ const SearchBar = () => {
   const [activeIndex, setActiveIndex] = useState(-1);
   const debounceTimeout = useRef(null);
   const wrapperRef = useRef(null);
-
+  console.log("Frontend URL:", import.meta.env.VITE_FRONTEND_URL);
   
   // Debounced fetch
   const fetchSuggestions = async (searchTerm) => {

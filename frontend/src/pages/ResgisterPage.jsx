@@ -48,7 +48,7 @@ export default function RegisterPage() {
         onChange={(e) => setPassword(e.target.value)}
         className="w-full p-2 mb-4 border rounded"
       />
-      <button onClick={handleRegister} className="w-full bg-green-600 text-white p-2 rounded">
+      <button onClick={handleRegister} className="w-full bg-green-600 text-white p-2 rounded cursor-pointer">
         Register
       </button>
     </div>

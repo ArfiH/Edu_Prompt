@@ -13,7 +13,7 @@ function Home() {
   const [watchHistory, setWatchHistory] = useState([]);
 
   const token = localStorage.getItem("token");
-  console.log(token);
+  // console.log(token);
 
   if (!token) {
     console.log("No token found in local storage.");

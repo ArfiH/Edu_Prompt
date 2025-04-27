@@ -49,10 +49,10 @@ export default function LoginPage() {
         onChange={(e) => setPassword(e.target.value)}
         className="w-full p-2 mb-4 border rounded"
       />
-      <button onClick={handleLogin} className="w-full bg-blue-600 text-white p-2 mb-2 rounded">
+      <button onClick={handleLogin} className="w-full bg-blue-600 text-white p-2 mb-2 rounded cursor-pointer">
         Login
       </button>
-      <button onClick={handleGuestLogin} className="w-full bg-gray-600 text-white p-2 rounded">
+      <button onClick={handleGuestLogin} className="w-full bg-gray-600 text-white p-2 rounded cursor-pointer">
         Continue as Guest
       </button>
       <p className="mt-4 text-sm">

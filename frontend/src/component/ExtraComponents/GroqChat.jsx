@@ -34,9 +34,9 @@ export default function GroqChat({ help }) {
 
 
   // Focus input on component mount
-  useEffect(() => {
-    inputRef.current?.focus();
-  }, []);
+  // useEffect(() => {
+  //   inputRef.current?.focus();
+  // }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
