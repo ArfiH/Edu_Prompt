@@ -5,8 +5,10 @@ import home2 from "../home2.svg";
 import home3 from "../home3.svg";
 // import homePageSVG from '../student_jumping.svg'
 import SearchBar from "../component/SearchBar";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
+  const navigate = useNavigate();
   const [notes, setNotes] = useState([]);
   const [watchHistory, setWatchHistory] = useState([]);
 
@@ -16,10 +18,12 @@ function Home() {
   if (!token) {
     console.log("No token found in local storage.");
     // Redirect to login page with meaningful message
-    window.location.href = `${import.meta.env.VITE_FRONTEND_URL}/sign-in`;
+    // window.location.href = `${import.meta.env.VITE_FRONTEND_URL}/sign-in`;
     // window.location.href = "/sign-in?message=Please log in to access this page.";
-
+  
+    navigate("/sign-in");
   }
+
   useEffect(() => {
     const fetchWatchHistory = async () => {
       try {

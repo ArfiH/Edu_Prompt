@@ -63,7 +63,7 @@ const SearchBar = () => {
   const handleSelect = (suggestion) => {
     setQuery(suggestion);
     setSuggestions([]);
-    window.location.href = `h${import.meta.env.VITE_FRONTEND_URL}/result/${suggestion}`;
+    window.location.href = `${import.meta.env.VITE_FRONTEND_URL}/result/${suggestion}`;
   };
 
   // Click outside to close

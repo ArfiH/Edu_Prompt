@@ -9,6 +9,8 @@ import Test from "./pages/Test";
 import RegisterPage from "./pages/ResgisterPage";
 import LoginPage from "./pages/LoginPage";
 
+const token = localStorage.getItem("token");
+
 function App() {
   return (
     <div className="app-container min-h-screen bg-gray-200">
@@ -16,7 +18,7 @@ function App() {
       <main className="mt-[-2rem]">
         <BrowserRouter>
           <Routes>
-            <Route index element={<Home />} />
+            {token ? (<Route index element={<Home />} />) : (<Route index element={<LoginPage />} />)}
             <Route path="video/:id" element={<Video />} />
             <Route path="result/:query" element={<SearchResult />} />
             <Route path="test" element={<Test />} />
