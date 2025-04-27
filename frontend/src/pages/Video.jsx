@@ -530,7 +530,7 @@ function Video() {
             help={help}
             flashcards={flashcards}
           />
-          <Recommendations />
+          {/* <Recommendations /> */}
         </div>
       </main>
     </>
