@@ -154,7 +154,7 @@ function Video() {
       const trackWatch = async () => {
         try {
           await axios.post(
-            "http://localhost:5000/api/watch",
+            `${import.meta.env.VITE_BACKEND_URL}/api/watch`,
             { videoId: id, title: res.snippet.title },
             { headers: { Authorization: `Bearer ${token}` } }
           );
@@ -167,25 +167,6 @@ function Video() {
     });
   }, []);
 
-  // let token = localStorage.getItem("token");
-  // console.log("Token at Video.jsx is " + token);
-  // useEffect(() => {
-  //   if (!id || !token) return;
-
-  //   const trackWatch = async () => {
-  //     try {
-  //       await axios.post(
-  //         "http://localhost:5000/api/watch",
-  //         { videoId: id, title: video.snippet.title },
-  //         { headers: { Authorization: `Bearer ${token}` } }
-  //       );
-  //     } catch (err) {
-  //       console.error("Failed to update watch history", err);
-  //     }
-  //   };
-
-  //   trackWatch();
-  // }, [id, "video.snippet.title", token]);
 
   const handleSaveClick = async () => {
     if (!editor) {
@@ -199,7 +180,7 @@ function Video() {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/notes",
+        `${import.meta.env.VITE_BACKEND_URL}/api/notes`,
         {
           videoId,
           title: noteTitle,
