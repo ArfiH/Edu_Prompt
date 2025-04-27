@@ -41,14 +41,14 @@ export async function getFlashcards(videoTitle, videoDescription, caption) {
     Format the response as:
       [
         {
-          id: 1,
-          Question: 'question text',
-          Answer: 'answer text'  
+          "id": 1,
+          "Question": 'question text',
+          "Answer": 'answer text'  
         },
         {
-          id: 2,
-          Question: 'question text',
-          Answer: 'answer text'  
+          "id": 2,
+          "Question": 'question text',
+          "Answer": 'answer text'  
         },
       ...]
     `;
@@ -69,7 +69,7 @@ export async function getQuizByTitle(videoTitle, videoDescription) {
       [
         {
         "question": "Question 1",
-		"questionType": "text",
+		    "questionType": "text",
         "options": ["Option 1", "Option 2", "Option 3", "Option 4"],
         "answer": "Correct Option"
         },
