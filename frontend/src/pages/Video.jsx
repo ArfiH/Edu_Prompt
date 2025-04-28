@@ -8,7 +8,7 @@ import Extras from "../component/Extras";
 import "./splitPaneStyles.css";
 import "./Video.css";
 import useWatchTracker from "../hooks/watchTracker";
-
+import SplitPane, {Pane} from "react-split-pane";
 import { getVideoByID } from "../youtube";
 
 import {
