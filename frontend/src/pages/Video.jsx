@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import SplitPane, { Pane } from "react-split-pane";
 import axios from "axios";
 import ReactPlayer from "react-player";
 import TipTapEditor from "../component/TipTapEditor";
@@ -19,7 +20,9 @@ import {
 } from "../groq";
 
 const getSubtitles = async (videoId) => {
-  const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/subtitles/${videoId}`);
+  const res = await axios.get(
+    `${import.meta.env.VITE_BACKEND_URL}/api/subtitles/${videoId}`
+  );
   console.log("Response while fetching subtitles: " + res.data);
   return res.data.subtitles;
 };
@@ -98,17 +101,27 @@ function Video() {
     setExtraActiveIndex(3);
     try {
       let flashcardData = await getFlashcards(title, description, caption);
-      flashcardData = flashcardData.slice(flashcardData.indexOf("["), flashcardData.indexOf("]"));
-      const jsonString = flashcardData
+  
+      // Extract the JSON array from the response
+      const jsonStart = flashcardData.indexOf("[");
+      const jsonEnd = flashcardData.lastIndexOf("]") + 1;
+      const jsonString = flashcardData.slice(jsonStart, jsonEnd);
+  
+      // Clean up the JSON string
+      const cleanedJsonString = jsonString
         .replace(/([{,]\s*)(\w+):/g, '$1"$2":') // Add quotes around property names
-        .replace(/'/g, '"'); // Replace single quotes with double quotes
-
+        .replace(/'/g, '"') // Replace single quotes with double quotes
+        .replace(/"([^"]*)"/g, (match, p1) => `"${p1.replace(/"/g, '\\"')}"`); // Escape double quotes inside strings
+  
+      console.log("Cleaned JSON String:", cleanedJsonString);
+  
       // Parse the JSON string to create an array of objects
-      const flashcardsArray = JSON.parse(jsonString);
+      const flashcardsArray = JSON.parse(cleanedJsonString);
+  
       setFlashcards(flashcardsArray);
-      console.log(flashcardData);
+      console.log("Parsed Flashcards:", flashcardsArray);
     } catch (error) {
-      console.log(error);
+      console.error("Error parsing flashcards:", error);
     }
   }
 
@@ -117,11 +130,14 @@ function Video() {
     const fetchNote = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/notes/${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const res = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/api/notes/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         if (res.data && res.data.content) {
           setNoteTitle(res.data.title);
           setInitialContent(res.data.content); // ⬅️ This will go into TipTapEditor
@@ -167,7 +183,6 @@ function Video() {
     });
   }, []);
 
-
   const handleSaveClick = async () => {
     if (!editor) {
       console.log("Editor not ready");
@@ -207,8 +222,13 @@ function Video() {
       <>
         <main>
           <div className="container">
-            <div className="content-wrapper mobile-content">
-              <div className="video-section mt-8">
+            <SplitPane
+              performanceMode={true}
+              style={{ position: "static", marginBottom: "-2.96rem" }}
+              split="vertical"
+              defaultSize="50%"
+            >
+              <Pane className="video-section mt-8 min-w-20">
                 <ReactPlayer
                   className="aspect-video rounded-xl overflow-hidden"
                   width="100%"
@@ -227,21 +247,16 @@ function Video() {
                   </div>
                   <p>{video.snippet.description.slice(0, 160)}...</p>
                 </div>
-              </div>
+              </Pane>
 
-              <div className="notes-container mt-8">
+              <Pane className="notes-container mt-8">
                 <div className="notes-header">
                   <input
-                    className="border p-2 mb-4 w-full"
-                    placeholder="Note title"
-                    value={noteTitle}
+                    type="text"
                     onChange={(e) => setNoteTitle(e.target.value)}
-                  />
-
-                  <button
-                    onClick={handleSaveClick}
-                    className="mt-4 bg-blue-600 text-white px-4 py-2 rounded"
-                  >
+                    value={noteTitle}
+                  ></input>
+                  <button onClick={handleSaveClick} className="btn btn-outline">
                     Save
                   </button>
                 </div>
@@ -251,8 +266,8 @@ function Video() {
                     initialContent={initialContent}
                   />
                 </div>
-              </div>
-            </div>
+              </Pane>
+            </SplitPane>
 
             <div className="ai-tools">
               <div
@@ -377,7 +392,12 @@ function Video() {
       <main>
         <div className="container">
           <div className="content-wrapper">
-            <div>
+            <SplitPane
+              performanceMode={true}
+              style={{ position: "static", marginBottom: "-2.96rem" }}
+              split="vertical"
+              defaultSize="50%"
+            >
               <div className="video-section mt-8 min-w-20">
                 <ReactPlayer
                   className="aspect-video rounded-xl overflow-hidden"
@@ -417,7 +437,7 @@ function Video() {
                   />
                 </div>
               </div>
-            </div>
+            </SplitPane>
           </div>
 
           <div className="ai-tools">
