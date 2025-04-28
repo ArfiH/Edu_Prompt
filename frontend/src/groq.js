@@ -36,23 +36,22 @@ export async function getSummary(videoTitle, videoDescription, caption) {
 }
 
 export async function getFlashcards(videoTitle, videoDescription, caption) {
-  const prompt = `Based on this YouTube video, ${videoTitle}, description: ${videoDescription}. Transcript of this video:
+  const prompt = `Based on this youtube video, ${videoTitle}, description: ${videoDescription}. Transcript of this video:
     ${caption}. Generate flashcards notes as JSON covering all the key concepts. 
     Format the response as:
       [
         {
           "id": 1,
-          "Question": "question text",
-          "Answer": "answer text"
+          "Question": 'question text',
+          "Answer": 'answer text'  
         },
         {
           "id": 2,
-          "Question": "question text",
-          "Answer": "answer text"
+          "Question": 'question text',
+          "Answer": 'answer text'  
         },
-        ...
-      ]
-    Ensure the JSON is valid and all strings use double quotes. Escape any double quotes inside the Question or Answer fields.`;
+      ...]
+    `;
 
   const chatCompletion = await getGroqChatCompletion(prompt);
   // Print the completion returned by the LLM.

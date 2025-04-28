@@ -17,7 +17,6 @@
     "@tiptap/pm": "^2.11.7",
     "@tiptap/react": "^2.11.7",
     "@tiptap/starter-kit": "^2.11.7",
-    "@vercel/analytics": "^1.5.0",
     "axios": "^1.8.4",
     "groq-sdk": "^0.20.1",
     "lucide-react": "^0.487.0",
@@ -27,7 +26,6 @@
     "react-player": "^2.16.0",
     "react-quiz-component": "^0.9.1",
     "react-router-dom": "^7.4.0",
-    "react-split-pane": "^2.0.3",
     "tailwindcss": "^4.0.15"
   },
   "devDependencies": {
