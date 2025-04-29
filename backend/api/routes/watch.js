@@ -1,31 +1,15 @@
 import express from "express";
 import User from "../models/User.js";
-import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
+import authMiddleware from "../middleware/authMiddleware.js";
 
-dotenv.config();
 const router = express.Router();
-
-// Middleware to extract user from token
-const authMiddleware = (req, res, next) => {
-  const token = req.headers.authorization?.split(" ")[1];
-  if (!token) return res.status(401).json({ error: "No token provided" });
-
-  try {
-    const decoded = jwt.verify(token, "abcde12345");
-    req.userId = decoded.id;
-    next();
-  } catch (err) {
-    res.status(401).json({ error: "Invalid token" });
-  }
-};
 
 // POST /api/watch
 router.post("/", authMiddleware, async (req, res) => {
   const { videoId, title } = req.body;
   console.log("Hit Watch route");
   try {
-    const user = await User.findById(req.userId);
+    const user = await User.findById(req.user.id);
     if (!user) return res.status(404).json({ error: "User not found" });
 
     const lastWatched = user.watchHistory[user.watchHistory.length - 1];
@@ -34,9 +18,8 @@ router.post("/", authMiddleware, async (req, res) => {
     if (!isSameAsLast) {
       user.watchHistory.push({ videoId, title });
       await user.save();
-    }
-    else {
-      console.log('Same as last');
+    } else {
+      console.log("Same as last");
     }
     console.log({ videoId, title });
 
@@ -51,7 +34,7 @@ router.post("/", authMiddleware, async (req, res) => {
 // GET /api/watch
 router.get("/", authMiddleware, async (req, res) => {
   try {
-    const user = await User.findById(req.userId).select("watchHistory");
+    const user = await User.findById(req.user.id).select("watchHistory");
     if (!user) return res.status(404).json({ error: "User not found" });
 
     const recentHistory = user.watchHistory.slice(-10).reverse(); // Get last 10 and reverse to show most recent first
