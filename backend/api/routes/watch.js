@@ -17,7 +17,7 @@ const authMiddleware = (req, res, next) => {
     req.userId = decoded.id;
     next();
   } catch (err) {
-    window.location.href = "/sign-in";
+    console.error("JWT verification error:", err.message);
     res.status(401).json({ error: "Invalid token while fetching watch history" });
   }
 };
