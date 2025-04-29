@@ -2,7 +2,6 @@ import express from 'express';
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import dotenv from 'dotenv';
-import authMiddleware from "../middleware/auth.js";
 
 dotenv.config();
 
@@ -10,7 +9,7 @@ import User from "../models/User.js";
 const router = express.Router();
 
 // POST /api/auth/signup
-router.post("/signup", authMiddleware, async (req, res) => {
+router.post("/signup", async (req, res) => {
   const { name, email, password } = req.body;
   console.log(req.body);
   try {

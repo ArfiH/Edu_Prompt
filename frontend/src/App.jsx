@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./component/Header";
 import Home from "./pages/Home";
@@ -17,7 +18,7 @@ function App() {
       <main className="mt-[-2rem]">
         <BrowserRouter>
           <Routes>
-            {(token) ? (<Route index element={<Home />} />) : (<Route index element={<LoginPage />} />)}
+            {token ? (<Route index element={<Home />} />) : (<Route index element={<LoginPage />} />)}
             <Route path="video/:id" element={<Video />} />
             <Route path="result/:query" element={<SearchResult />} />
             <Route path="test" element={<Test />} />
