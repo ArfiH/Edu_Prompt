@@ -3,7 +3,6 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import dotenv from 'dotenv';
 
-
 dotenv.config();
 
 import User from "../models/User.js";
@@ -29,10 +28,16 @@ router.post("/signin", async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
-    if (!user) return res.status(404).json({ error: "User not found" });
+    if (!user) { 
+      console.log('User not found');
+      return res.status(404).json({ error: "User not found" });
+    }
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(401).json({ error: "Invalid credentials" });
+    if (!isMatch) {
+      console.log('Invalid credentials');
+      return res.status(401).json({ error: "Invalid credentials" });
+    }
 
     const token = jwt.sign({ id: user._id }, 'abcde12345', { expiresIn: "1h" });
     res.json({ token, user: { name: user.name, email: user.email } });
