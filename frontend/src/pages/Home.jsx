@@ -32,6 +32,7 @@ function Home() {
         console.log(data);
         setWatchHistory(data);
       } catch (err) {
+        handleLogout();
         navigate("/sign-in");
         console.error("Error fetching watch history:", err);
       }
@@ -53,6 +54,8 @@ function Home() {
         const data = JSON.parse(text);
         setNotes(data);
       } catch (err) {
+        handleLogout();
+        navigate("/sign-in");
         console.error("Failed to fetch notes:", err);
       }
     };

@@ -139,7 +139,7 @@ function Video() {
         );
         if (res.data && res.data.content) {
           setNoteTitle(res.data.title);
-          setInitialContent(res.data.content); // ⬅️ This will go into TipTapEditor
+          setInitialContent(res.data.content);
         }
       } catch (err) {
         console.log("No note found or failed to fetch note:", err);
@@ -174,6 +174,8 @@ function Video() {
             { headers: { Authorization: `Bearer ${token}` } }
           );
         } catch (err) {
+          handleLogout();
+          navigate("/sign-in");
           console.error("Failed to update watch history", err);
         }
       };
@@ -209,7 +211,9 @@ function Video() {
       console.log("Note saved successfully!");
     } catch (error) {
       console.error(error);
-      console.log("Failed to save note.");
+      handleLogout();
+      navigate("/sign-in");
+      console.log("Failed to save note." + error);
     }
   };
 
