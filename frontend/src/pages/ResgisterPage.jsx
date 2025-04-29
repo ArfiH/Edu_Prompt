@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { set } from "mongoose";
 
 export default function RegisterPage() {
   const [name, setName] = useState("");
@@ -18,6 +17,7 @@ export default function RegisterPage() {
     }
 
     if (errorMsg) {
+      // don't trigger sign-up if email is invalid
       return;
     }
 
@@ -45,7 +45,7 @@ export default function RegisterPage() {
         placeholder="Name"
         value={name}
         onChange={(e) => setName(e.target.value)}
-        className="w-full p-2 mb-2 border rounded"
+        className="w-full p-2 mb-3 border rounded"
       />
       <input
         type="email"
