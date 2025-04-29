@@ -222,50 +222,48 @@ function Video() {
         <main>
           <div className="container">
             <div className="content-wrapper mobile-content">
-              <div className="flex-container">
-                <div className="video-section mt-8">
-                  <ReactPlayer
-                    className="aspect-video rounded-xl overflow-hidden"
-                    width="100%"
-                    height="100%"
-                    url={`https://www.youtube.com/watch?v=${id}`}
-                    controls
-                  />
-                  <div className="video-info">
-                    <h1 className="video-title">{video.snippet.title}</h1>
-                    <div className="video-meta">
-                      <span>Count {video.statistics.viewCount}</span>
-                      <span>•</span>
-                      <span>{video.statistics.likeCount} likes</span>
-                      <span>•</span>
-                      <span>Video by {video.snippet.channelTitle}</span>
-                    </div>
-                    <p>{video.snippet.description.slice(0, 160)}...</p>
+              <div className="video-section mt-8">
+                <ReactPlayer
+                  className="aspect-video rounded-xl overflow-hidden"
+                  width="100%"
+                  height="100%"
+                  url={`https://www.youtube.com/watch?v=${id}`}
+                  controls
+                />
+                <div className="video-info">
+                  <h1 className="video-title">{video.snippet.title}</h1>
+                  <div className="video-meta">
+                    <span>Count {video.statistics.viewCount}</span>
+                    <span>•</span>
+                    <span>{video.statistics.likeCount} likes</span>
+                    <span>•</span>
+                    <span>Video by {video.snippet.channelTitle}</span>
                   </div>
+                  <p>{video.snippet.description.slice(0, 160)}...</p>
                 </div>
+              </div>
 
-                <div className="notes-container mt-8">
-                  <div className="notes-header">
-                    <input
-                      className="border p-2 mb-4 w-full"
-                      placeholder="Note title"
-                      value={noteTitle}
-                      onChange={(e) => setNoteTitle(e.target.value)}
-                    />
+              <div className="notes-container mt-8">
+                <div className="notes-header">
+                  <input
+                    className="border p-2 mb-4 w-full"
+                    placeholder="Note title"
+                    value={noteTitle}
+                    onChange={(e) => setNoteTitle(e.target.value)}
+                  />
 
-                    <button
-                      onClick={handleSaveClick}
-                      className="mt-4 bg-blue-600 text-white px-4 py-2 rounded"
-                    >
-                      Save
-                    </button>
-                  </div>
-                  <div className="notes-editor">
-                    <TipTapEditor
-                      onEditorReady={setEditor}
-                      initialContent={initialContent}
-                    />
-                  </div>
+                  <button
+                    onClick={handleSaveClick}
+                    className="mt-4 bg-blue-600 text-white px-4 py-2 rounded"
+                  >
+                    Save
+                  </button>
+                </div>
+                <div className="notes-editor">
+                  <TipTapEditor
+                    onEditorReady={setEditor}
+                    initialContent={initialContent}
+                  />
                 </div>
               </div>
             </div>
@@ -393,7 +391,7 @@ function Video() {
       <main>
         <div className="container">
           <div className="content-wrapper">
-            <div className="flex-container">
+            <div>
               <div className="video-section mt-8 min-w-20">
                 <ReactPlayer
                   className="aspect-video rounded-xl overflow-hidden"

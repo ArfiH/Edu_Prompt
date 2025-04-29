@@ -8,7 +8,6 @@ import SearchResult from "./pages/SearchResult";
 import Test from "./pages/Test";
 import RegisterPage from "./pages/ResgisterPage";
 import LoginPage from "./pages/LoginPage";
-import jwt from "jsonwebtoken";
 
 const token = localStorage.getItem("token");
 
@@ -19,7 +18,7 @@ function App() {
       <main className="mt-[-2rem]">
         <BrowserRouter>
           <Routes>
-            {(token && jwt.verify(token, import.meta.env.VITE_JWT_SECRET)) ? (<Route index element={<Home />} />) : (<Route index element={<LoginPage />} />)}
+            {token ? (<Route index element={<Home />} />) : (<Route index element={<LoginPage />} />)}
             <Route path="video/:id" element={<Video />} />
             <Route path="result/:query" element={<SearchResult />} />
             <Route path="test" element={<Test />} />
