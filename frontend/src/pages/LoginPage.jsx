@@ -5,6 +5,7 @@ import axios from "axios";
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMsg, setErrorMsg] = useState(""); 
   const navigate = useNavigate();
 
   const handleLogin = async () => {
@@ -17,8 +18,18 @@ export default function LoginPage() {
       console.log(res.data.user.name);
       localStorage.setItem("token", res.data.token);
       window.location.href = "/";
+      setErrorMsg("");
+      // navigate("/");
     } catch (err) {
-      alert("Login failed: " + err);
+      if (err.message === "Request failed with status code 401") {
+        setErrorMsg("Invalid credentials. Please try again.");
+      }
+      else if (err.message === "Request failed with status code 404") {
+        setErrorMsg("User not found. Please check your email.");
+      }
+      else {
+        setErrorMsg("An unexpected error occurred. Please try again.");
+      }
     }
   };
 
@@ -52,6 +63,7 @@ export default function LoginPage() {
       <button onClick={handleLogin} className="w-full bg-blue-600 text-white p-2 mb-2 rounded cursor-pointer">
         Login
       </button>
+      <p className="text-red-500 text-sm mb-2">{errorMsg}</p>
       <button onClick={handleGuestLogin} className="w-full bg-gray-600 text-white p-2 rounded cursor-pointer">
         Continue as Guest
       </button>

@@ -2,14 +2,25 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { set } from "mongoose";
 
 export default function RegisterPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
   const navigate = useNavigate();
 
   const handleRegister = async () => {
+    if (!name || !email || !password) {
+      setErrorMsg("Please fill in all fields.");
+      return;
+    }
+
+    if (errorMsg) {
+      return;
+    }
+
     try {
       await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/signup`, {
         name,
@@ -19,7 +30,9 @@ export default function RegisterPage() {
       console.log("Registration successful");
       navigate("/sign-in");
     } catch (err) {
-      console.log("Registration failed");
+      if (err.message === "Request failed with status code 500") {
+        setErrorMsg("User already exists. Please try a different email.");
+      }
       console.log(err);
     }
   };
@@ -38,7 +51,16 @@ export default function RegisterPage() {
         type="email"
         placeholder="Email"
         value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        // validate email format
+        onChange={(e) => {
+          const emailValue = e.target.value;
+          setEmail(emailValue);
+          if (!/\S+@\S+\.\S+/.test(emailValue)) {
+            setErrorMsg("Invalid email format");
+          } else {
+            setErrorMsg("");
+          }
+        }}
         className="w-full p-2 mb-2 border rounded"
       />
       <input
@@ -48,9 +70,13 @@ export default function RegisterPage() {
         onChange={(e) => setPassword(e.target.value)}
         className="w-full p-2 mb-4 border rounded"
       />
-      <button onClick={handleRegister} className="w-full bg-green-600 text-white p-2 rounded cursor-pointer">
+      <button
+        onClick={handleRegister}
+        className="w-full bg-green-600 text-white p-2 rounded cursor-pointer"
+      >
         Register
       </button>
+      <p className="text-red-500 text-sm mb-2">{errorMsg}</p>
     </div>
   );
 }
