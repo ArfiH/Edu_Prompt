@@ -12,11 +12,13 @@ const authMiddleware = (req, res, next) => {
   if (!token) return res.status(401).json({ error: "No token provided" });
 
   try {
-    const decoded = jwt.verify(token, "abcde12345");
+    const decoded = jwt.verify(token, process.env.VITE_JWT_SECRET);
+    if (!decoded) return res.status(401).json({ error: "Invalid token while fetching watch history" });
     req.userId = decoded.id;
     next();
   } catch (err) {
-    res.status(401).json({ error: "Invalid token" });
+    window.location.href = "/sign-in";
+    res.status(401).json({ error: "Invalid token while fetching watch history" });
   }
 };
 

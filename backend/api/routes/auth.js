@@ -39,7 +39,8 @@ router.post("/signin", async (req, res) => {
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
-    const token = jwt.sign({ id: user._id }, 'abcde12345', { expiresIn: "1h" });
+    // const token = jwt.sign({ id: user._id }, prcoess.env.VITE_JWT_SECRET, { expiresIn: "1h" });
+    const token = jwt.sign({ id: user._id }, process.env.VITE_JWT_SECRET);
     res.json({ token, user: { name: user.name, email: user.email } });
   } catch (err) {
     res.status(500).json({ error: "Signin failed", details: err.message });
@@ -56,7 +57,9 @@ router.post("/guest", async (req, res) => {
       isGuest: true,
     });
     await guestUser.save();
-    const token = jwt.sign({ id: guestUser._id }, 'abcde12345', { expiresIn: "1h" });
+    // const token = jwt.sign({ id: guestUser._id }, process.env.VITE_JWT_SECRET, { expiresIn: "1h" });
+    const token = jwt.sign({ id: guestUser._id }, process.env.VITE_JWT_SECRET);
+    
     res.json({ token, user: { name: guestUser.name, email: guestUser.email } });
   } catch (err) {
     res.status(500).json({ error: "Guest login failed", details: err.message });

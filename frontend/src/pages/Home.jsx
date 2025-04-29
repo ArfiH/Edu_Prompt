@@ -32,6 +32,7 @@ function Home() {
         console.log(data);
         setWatchHistory(data);
       } catch (err) {
+        navigate("/sign-in");
         console.error("Error fetching watch history:", err);
       }
     };
