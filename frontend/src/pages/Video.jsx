@@ -18,6 +18,13 @@ import {
   getFlashcards,
 } from "../groq";
 
+const handleLogout = () => {
+  localStorage.removeItem("name");
+  localStorage.removeItem("token");
+  window.location.href = "/sign-in"; // or navigate with useNavigate
+};
+
+
 const getSubtitles = async (videoId) => {
   const res = await axios.get(
     `${import.meta.env.VITE_BACKEND_URL}/api/subtitles/${videoId}`

@@ -7,6 +7,13 @@ import home3 from "../home3.svg";
 import SearchBar from "../component/SearchBar";
 import { useNavigate } from "react-router-dom";
 
+const handleLogout = () => {
+  localStorage.removeItem("name");
+  localStorage.removeItem("token");
+  window.location.href = "/sign-in"; // or navigate with useNavigate
+};
+
+
 function Home() {
   const navigate = useNavigate();
   const [notes, setNotes] = useState([]);
