@@ -57,9 +57,7 @@ router.post("/guest", async (req, res) => {
       isGuest: true,
     });
     await guestUser.save();
-    // const token = jwt.sign({ id: guestUser._id }, process.env.VITE_JWT_SECRET, { expiresIn: "1h" });
     const token = jwt.sign({ id: guestUser._id }, process.env.VITE_JWT_SECRET);
-    
     res.json({ token, user: { name: guestUser.name, email: guestUser.email } });
   } catch (err) {
     res.status(500).json({ error: "Guest login failed", details: err.message });
