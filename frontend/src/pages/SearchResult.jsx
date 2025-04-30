@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getVideos } from "../youtube"
+import { getVideosPlaylistsChannels } from "../youtube";
 import Card from "../component/Card";
 import SearchBar from "../component/SearchBar";
 
 function SearchResult() {
   const { query } = useParams();
   const [videoList, setVideoList] = useState([]);
+  const [playList, setPlayList] = useState([]);
+  const [channelList, setChannelList] = useState([]);
 
   const [searchQuery, setSearchQuery] = useState(query || "");
   const [filteredVideos, setFilteredVideos] = useState([]);
@@ -14,13 +16,20 @@ function SearchResult() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    getVideos(searchQuery).then((res) => {
-      if (res && res.length > 0) {
-        setVideoList(res);
-        setFilteredVideos(res);
+    getVideosPlaylistsChannels(searchQuery).then((res) => {
+      if (res && res.length > 0 && res[0].length > 0) {
+        console.log(res);
+        setVideoList(res[0].slice(1));
+        setPlayList(res[1]);
+        setChannelList(res[0]);
+
+        setFilteredVideos(res[0].slice(1));
 
         // Set the first video as featured if available, replace it with last viewed video
-        setFeaturedVideo(res[0]);
+        setFeaturedVideo(res[0][0]);
+      }
+      else {
+        console.log("No videos found for the search query.");
       }
 
       setIsLoading(false);
@@ -81,6 +90,35 @@ function SearchResult() {
           </div>
         </div>
       )}
+
+      {playList.length > 0 && (
+        <div className="mb-12">
+          <h2 className="text-2xl font-bold mb-6 text-gray-800">Playlists</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {playList.map((playlist) => (
+              <Card
+                key={playlist.etag}
+                playlist={playlist}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {channelList.length > 0 && (
+        <div className="mb-12">
+          <h2 className="text-2xl font-bold mb-6 text-gray-800">Channels</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {channelList.map((channel) => (
+              <Card
+                key={channel.etag}
+                channel={channel}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+    
 
       {/* Video Grid Section */}
       <div>

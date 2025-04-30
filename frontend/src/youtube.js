@@ -6,7 +6,7 @@ const apiKeys = [VITE_YOUTUBE_API_KEY, VITE_YOUTUBE_API_KEY2];
 const BASE_URL = "https://www.googleapis.com/youtube/v3";
 let currKey = 0;
 
-const getVideos = async (searchQuery) => {
+const getVideosPlaylistsChannels = async (searchQuery) => {
   const newKey = apiKeys[currKey++ % apiKeys.length];
   const res = await axios.get(`${BASE_URL}/search`, {
     params: {
@@ -17,14 +17,28 @@ const getVideos = async (searchQuery) => {
       relevanceLanguage: "en",
       videoType: "any",
       topicId: "/m/01k8wb",
-      videoDimension: "2d",
       safeSearch: "strict",
       key: newKey,
     },
   });
-  const videoList = await res.data.items;
+  const videoList = await res.data.items.filter(
+    (item) => item.id.kind === "youtube#video"
+  );
   console.log(videoList);
-  return videoList;
+
+  // Filter out items that are playlist or have a playlistId
+  const playlistArr = res.data.items.filter(
+    (item) => item.id.kind === "youtube#playlist" && item.id.playlistId
+  );
+  console.log(playlistArr);
+
+  // Filter out items that are channel or have a channelId
+  const channelArr = res.data.items.filter(
+    (item) => item.id.kind === "youtube#channel" && item.id.channelId
+  );
+  console.log(channelArr);
+
+  return [videoList, playlistArr, channelArr];
 };
 
 // https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=Ks-_Mh1QhMc&key=[YOUR_API_KEY]
@@ -40,4 +54,4 @@ const getVideoByID = async (id) => {
   return res.data.items[0];
 };
 
-export { getVideos, getVideoByID };
+export { getVideosPlaylistsChannels, getVideoByID };
