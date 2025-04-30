@@ -21,7 +21,7 @@ function SearchResult() {
         console.log(res);
         setVideoList(res[0].slice(1));
         setPlayList(res[1]);
-        setChannelList(res[0]);
+        setChannelList(res[2]);
 
         setFilteredVideos(res[0].slice(1));
 
@@ -91,20 +91,6 @@ function SearchResult() {
         </div>
       )}
 
-      {playList.length > 0 && (
-        <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-gray-800">Playlists</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {playList.map((playlist) => (
-              <Card
-                key={playlist.etag}
-                playlist={playlist}
-              />
-            ))}
-          </div>
-        </div>
-      )}
-
       {channelList.length > 0 && (
         <div className="mb-12">
           <h2 className="text-2xl font-bold mb-6 text-gray-800">Channels</h2>
@@ -150,6 +136,21 @@ function SearchResult() {
           </div>
         )}
       </div>
+
+      {playList.length > 0 && (
+        <div className="mb-12">
+          <h2 className="text-2xl font-bold mb-6 text-gray-800">Playlists</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {playList.map((playlist) => (
+              <Card
+                key={playlist.etag}
+                playlist={playlist}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }

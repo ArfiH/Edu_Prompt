@@ -6,14 +6,21 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [guestLoading, setGuestLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async () => {
+    setLoading(true);
+    setErrorMsg("");
     try {
-      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/signin`, {
-        email,
-        password,
-      });
+      const res = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/auth/signin`,
+        {
+          email,
+          password,
+        }
+      );
       localStorage.setItem("name", res.data.user.name);
       localStorage.setItem("token", res.data.token);
       window.location.href = "/";
@@ -26,18 +33,25 @@ export default function LoginPage() {
       } else {
         setErrorMsg("An unexpected error occurred. Please try again.");
       }
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleGuestLogin = async () => {
+    setGuestLoading(true);
     try {
-      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/guest`);
+      const res = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/auth/guest`
+      );
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("name", res.data.user.name);
       window.location.href = "/"; // Redirect to the home page
     } catch (err) {
       console.error("Guest login failed:", err);
       alert("Guest login failed. Please try again.");
+    } finally {
+      setGuestLoading(false);
     }
   };
 
@@ -62,17 +76,20 @@ export default function LoginPage() {
         onClick={handleLogin}
         className="w-full bg-blue-600 text-white p-2 mb-2 rounded cursor-pointer"
       >
-        Login
+        {loading ? "Loading..." : "Login"}
       </button>
       <p className="text-red-500 text-sm mb-2">{errorMsg}</p>
       <button
         onClick={handleGuestLogin}
         className="w-full bg-gray-600 text-white p-2 rounded cursor-pointer"
       >
-        Continue as Guest
+        {guestLoading ? "Loading..." : "Continue as Guest"}
       </button>
       <p className="mt-4 text-sm">
-        Don't have an account? <a href="/sign-up" className="text-blue-500">Register</a>
+        Don't have an account?{" "}
+        <a href="/sign-up" className="text-blue-500">
+          Register
+        </a>
       </p>
     </div>
   );

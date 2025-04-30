@@ -17,6 +17,19 @@ function Header() {
     window.location.href = "/sign-in"; // or navigate with useNavigate
   };
 
+  function getInitials(name) {
+    console.log("Name:", name);
+    if (!name) return "";
+    const names = name.split(" ");
+    if (names.length === 1) {
+      return names[0].charAt(0).toUpperCase() + names[0].slice(1, 5);
+    } else {
+      return (
+        names[0] + names[1].charAt(0).toUpperCase()
+      );
+    }
+  }
+
   return (
     <header className="app-header">
       <div className="header-container p-4 flex justify-between items-center">
@@ -40,12 +53,10 @@ function Header() {
 
         {user ? (
           <div className="flex items-center gap-4">
-            { user.length <= 5 ? 
-              <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mx-auto ">
-                <span className="text-blue-600 text-sm font-bold">{user}</span>
-              </div> :
-            <span className="font-medium">Hello {user}</span>
-            }
+            <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mx-auto ">
+              <span className="text-blue-600 text-sm font-bold">{user.length > 5 ? getInitials(user) : user}</span>
+            </div>
+
             <button className="btn btn-outline" onClick={handleLogout}>
               Logout
             </button>

@@ -8,9 +8,12 @@ export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleRegister = async () => {
+    setLoading(true);
+    setErrorMsg(""); 
     if (!name || !email || !password) {
       setErrorMsg("Please fill in all fields.");
       return;
@@ -34,6 +37,9 @@ export default function RegisterPage() {
         setErrorMsg("User already exists. Please try a different email.");
       }
       console.log(err);
+    }
+    finally {
+      setLoading(false);
     }
   };
 
@@ -74,7 +80,7 @@ export default function RegisterPage() {
         onClick={handleRegister}
         className="w-full bg-green-600 text-white p-2 rounded cursor-pointer"
       >
-        Register
+        {loading ? "Registering..." : "Register"}
       </button>
       <p className="text-red-500 text-sm mb-2">{errorMsg}</p>
     </div>

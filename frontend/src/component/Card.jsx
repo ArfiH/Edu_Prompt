@@ -1,6 +1,6 @@
 import React from "react";
 
-function Card({ video, playlist, channel, isPlaylist, isChannel }) {
+function Card({ video, playlist, channel }) {
   return (
     <div className="card-container text-center rounded-3xl bg-primary">
       {video && (

@@ -11,7 +11,7 @@ const getVideosPlaylistsChannels = async (searchQuery) => {
   const res = await axios.get(`${BASE_URL}/search`, {
     params: {
       part: "snippet",
-      maxResults: 25,
+      maxResults: 24,
       q: searchQuery,
       order: "relevance",
       relevanceLanguage: "en",
