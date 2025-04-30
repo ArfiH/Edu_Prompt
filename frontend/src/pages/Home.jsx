@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import homePageSVG from "../home-page-svg.svg";
-import home1 from "../home1.svg";
 import home2 from "../home2.svg";
-import home3 from "../home3.svg";
-// import homePageSVG from '../student_jumping.svg'
 import SearchBar from "../component/SearchBar";
 import { useNavigate } from "react-router-dom";
 

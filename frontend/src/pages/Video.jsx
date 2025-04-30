@@ -7,7 +7,6 @@ import Recommendations from "../component/Recommendations";
 import Extras from "../component/Extras";
 import "./splitPaneStyles.css";
 import "./Video.css";
-import useWatchTracker from "../hooks/watchTracker";
 
 import { getVideoByID } from "../youtube";
 
@@ -33,10 +32,6 @@ const getSubtitles = async (videoId) => {
   return res.data.subtitles;
 };
 
-function getCaptionText(caption) {
-  let captionArr = caption.map((item) => item.text);
-  return captionArr.join(" ");
-}
 
 function Video() {
   const { id } = useParams();
