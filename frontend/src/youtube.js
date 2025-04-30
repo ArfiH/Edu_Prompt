@@ -13,12 +13,10 @@ const getVideos = async (searchQuery) => {
       part: "snippet",
       maxResults: 25,
       q: searchQuery,
-      type: "video,playlist",
-      videoEmbeddable: "true",
       order: "relevance",
       relevanceLanguage: "en",
       videoType: "any",
-      safeSearch: "high",
+      topicId: "/m/01k8wb",
       videoDimension: "2d",
       videoCategoryId: "27", // Category 27 is for education
       key: newKey,
