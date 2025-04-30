@@ -18,6 +18,7 @@ const getVideos = async (searchQuery) => {
       videoType: "any",
       topicId: "/m/01k8wb",
       videoDimension: "2d",
+      safeSearch: "strict",
       videoCategoryId: "27", // Category 27 is for education
       key: newKey,
     },
