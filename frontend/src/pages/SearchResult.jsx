@@ -14,7 +14,7 @@ function SearchResult() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    getVideos(searchQuery || "Reactjs videos").then((res) => {
+    getVideos(searchQuery).then((res) => {
       if (res && res.length > 0) {
         setVideoList(res);
         setFilteredVideos(res);

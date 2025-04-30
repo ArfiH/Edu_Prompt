@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 
 const SearchBar = () => {
-  const PORT = import.meta.env.VITE_SERVER_PORT || 5000;
+  const PORT = import.meta.env.VITE_SERVER_PORT;
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [isFocused, setIsFocused] = useState(false);
@@ -85,6 +85,15 @@ const SearchBar = () => {
         value={query}
         onChange={handleChange}
         onFocus={() => setIsFocused(true)}
+        onKeyDownCapture={e => {
+          console.log("Key pressed:", e.key);
+          if (e.key === "Enter") {
+            e.preventDefault();
+            if (query.trim()) {
+              window.location.href = `${import.meta.env.VITE_FRONTEND_URL}/result/${query}`;
+            }
+          }
+        }}
         onKeyDown={handleKeyDown}
         placeholder="Search YouTube videos..."
         className="w-full px-4 py-2 text-gray-800 bg-white border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-md"
