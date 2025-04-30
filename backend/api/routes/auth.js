@@ -53,7 +53,7 @@ router.post("/guest", async (req, res) => {
     const guestUser = new User({
       name: `Guest_${Date.now()}`,
       email: `guest_${Date.now()}@eduprompt.com`,
-      password: "guest", // You might hash or set temporary logic here
+      password: "guest", 
       isGuest: true,
     });
     await guestUser.save();
