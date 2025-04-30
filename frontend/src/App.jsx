@@ -8,6 +8,9 @@ import SearchResult from "./pages/SearchResult";
 import Test from "./pages/Test";
 import RegisterPage from "./pages/ResgisterPage";
 import LoginPage from "./pages/LoginPage";
+import Playlist from "./pages/Playlist";
+import Channel from "./pages/Channel";
+
 
 const token = localStorage.getItem("token");
 
@@ -20,6 +23,8 @@ function App() {
           <Routes>
             {token ? (<Route index element={<Home />} />) : (<Route index element={<LoginPage />} />)}
             <Route path="video/:id" element={<Video />} />
+            <Route path="playlist/:id" element={<Playlist />} />
+            <Route path="channel/:id" element={<Channel />} />
             <Route path="result/:query" element={<SearchResult />} />
             <Route path="test" element={<Test />} />
             <Route path="sign-up" element={<RegisterPage />} />

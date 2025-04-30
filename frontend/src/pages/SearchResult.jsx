@@ -27,8 +27,7 @@ function SearchResult() {
 
         // Set the first video as featured if available, replace it with last viewed video
         setFeaturedVideo(res[0][0]);
-      }
-      else {
+      } else {
         console.log("No videos found for the search query.");
       }
 
@@ -91,6 +90,7 @@ function SearchResult() {
         </div>
       )}
 
+      {/* Channel Section */}
       {channelList.length > 0 && (
         <div className="mb-12">
           <h2 className="text-2xl font-bold mb-6 text-gray-800">Channels</h2>
@@ -99,12 +99,12 @@ function SearchResult() {
               <Card
                 key={channel.etag}
                 channel={channel}
+                link={`/channel/${channel.id.channelId}`} // Add link to Channel page
               />
             ))}
           </div>
         </div>
       )}
-    
 
       {/* Video Grid Section */}
       <div>
@@ -137,20 +137,21 @@ function SearchResult() {
         )}
       </div>
 
+      {/* Playlist Section */}
       {playList.length > 0 && (
-        <div className="mb-12">
+        <div className="mt-8 mb-12">
           <h2 className="text-2xl font-bold mb-6 text-gray-800">Playlists</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {playList.map((playlist) => (
               <Card
                 key={playlist.etag}
                 playlist={playlist}
+                link={`/playlist/${playlist.id.playlistId}`} // Add link to Playlist page
               />
             ))}
           </div>
         </div>
       )}
-
     </div>
   );
 }

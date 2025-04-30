@@ -16,7 +16,7 @@ function Card({ video, playlist, channel }) {
           </div>
           <div className="video-description px-4">
             <h3 className="font-semibold">{video.snippet.title}</h3>
-            <div className="flex-conatiner flex justify-between items-center"></div>
+            <p className="text-sm text-gray-600">{video.snippet.channelTitle}</p>
           </div>
         </a>
       )}
@@ -33,7 +33,7 @@ function Card({ video, playlist, channel }) {
           </div>
           <div className="video-description px-4">
             <h3 className="font-semibold">{playlist.snippet.title}</h3>
-            <div className="flex-conatiner flex justify-between items-center"></div>
+            <p className="text-sm text-gray-600">{playlist.snippet.channelTitle}</p>
           </div>
         </a>
       )}
@@ -50,7 +50,7 @@ function Card({ video, playlist, channel }) {
           </div>
           <div className="video-description px-4">
             <h3 className="font-semibold">{channel.snippet.title}</h3>
-            <div className="flex-conatiner flex justify-between items-center"></div>
+            <p className="text-sm text-gray-600">{channel.snippet.description}</p>
           </div>
         </a>
       )}
