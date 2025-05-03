@@ -102,8 +102,10 @@ export async function getQuizByCaption(videoTitle, videoDescription, caption) {
       ]
     `;
   const chatCompletion = await getGroqChatCompletion(prompt);
+
   // Print the completion returned by the LLM.
-  console.log(chatCompletion.choices[0]?.message?.content);
+  // console.log(chatCompletion.choices[0]?.message?.content);
+
   return chatCompletion.choices[0]?.message?.content;
 }
 
