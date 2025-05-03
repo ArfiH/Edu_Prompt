@@ -13,15 +13,33 @@ export default function RegisterPage() {
 
   const handleRegister = async () => {
     setLoading(true);
-    setErrorMsg(""); 
+    setErrorMsg("");
     if (!name || !email || !password) {
       setErrorMsg("Please fill in all fields.");
       return;
     }
 
-    if (errorMsg) {
-      // don't trigger sign-up if email is invalid
+    const emailRegex = /\S+@\S+\.\S+/;
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9]).{8,}$/; // at least 8 characters, one uppercase letter, one number
+    if (!emailRegex.test(email)) {
+      setErrorMsg("Invalid email format.");
       return;
+    }
+
+    if (!passwordRegex.test(password)) {
+      // at least 8 characters
+      if (password.length < 8) {
+        setErrorMsg("Password must be at least 8 characters long.");
+        return;
+      }
+      if (!/[A-Z]/.test(password)) {
+        setErrorMsg("Password must contain at least one uppercase letter.");
+        return;
+      }
+      if (!/[0-9]/.test(password)) {
+        setErrorMsg("Password must contain at least one number.");
+        return;
+      }
     }
 
     try {
@@ -37,8 +55,7 @@ export default function RegisterPage() {
         setErrorMsg("User already exists. Please try a different email.");
       }
       console.log(err);
-    }
-    finally {
+    } finally {
       setLoading(false);
     }
   };

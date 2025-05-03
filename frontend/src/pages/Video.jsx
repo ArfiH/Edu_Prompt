@@ -7,6 +7,7 @@ import Recommendations from "../component/Recommendations";
 import Extras from "../component/Extras";
 import "./splitPaneStyles.css";
 import "./Video.css";
+import Resizable from "react-resizable-layout";
 
 import { getVideoByID } from "../youtube";
 
@@ -23,7 +24,6 @@ const handleLogout = () => {
   window.location.href = "/sign-in"; // or navigate with useNavigate
 };
 
-
 const getSubtitles = async (videoId) => {
   const res = await axios.get(
     `${import.meta.env.VITE_BACKEND_URL}/api/subtitles/${videoId}`
@@ -31,7 +31,6 @@ const getSubtitles = async (videoId) => {
   console.log("Response while fetching subtitles: " + res.data);
   return res.data.subtitles;
 };
-
 
 function Video() {
   const { id } = useParams();
@@ -228,52 +227,58 @@ function Video() {
         <main>
           <div className="container">
             <div className="content-wrapper mobile-content">
-              <div className="flex-container">
-                <div className="video-section mt-8">
-                  <ReactPlayer
-                    className="aspect-video rounded-xl overflow-hidden"
-                    width="100%"
-                    height="100%"
-                    url={`https://www.youtube.com/watch?v=${id}`}
-                    controls
-                  />
-                  <div className="video-info">
-                    <h1 className="video-title">{video.snippet.title}</h1>
-                    <div className="video-meta">
-                      <span>Count {video.statistics.viewCount}</span>
-                      <span>•</span>
-                      <span>{video.statistics.likeCount} likes</span>
-                      <span>•</span>
-                      <span>Video by {video.snippet.channelTitle}</span>
+              <Resizable axis={"x"}>
+                {({ position, separatorProps }) => (
+                  <>
+                    <div className="video-section mt-8" style={{ width: position }}>
+                      <ReactPlayer
+                        className="aspect-video rounded-xl overflow-hidden"
+                        width="100%"
+                        height="100%"
+                        url={`https://www.youtube.com/watch?v=${id}`}
+                        controls
+                      />
+                      <div className="video-info">
+                        <h1 className="video-title">{video.snippet.title}</h1>
+                        <div className="video-meta">
+                          <span>Count {video.statistics.viewCount}</span>
+                          <span>•</span>
+                          <span>{video.statistics.likeCount} likes</span>
+                          <span>•</span>
+                          <span>Video by {video.snippet.channelTitle}</span>
+                        </div>
+                        <p>{video.snippet.description.slice(0, 160)}...</p>
+                      </div>
                     </div>
-                    <p>{video.snippet.description.slice(0, 160)}...</p>
-                  </div>
-                </div>
 
-                <div className="notes-container mt-8">
-                  <div className="notes-header">
-                    <input
-                      className="border p-2 mb-4 w-full"
-                      placeholder="Note title"
-                      value={noteTitle}
-                      onChange={(e) => setNoteTitle(e.target.value)}
-                    />
+                    <YourSeparatorComponent {...separatorProps} />
 
-                    <button
-                      onClick={handleSaveClick}
-                      className="mt-4 bg-blue-600 text-white px-4 py-2 rounded"
-                    >
-                      Save
-                    </button>
-                  </div>
-                  <div className="notes-editor">
-                    <TipTapEditor
-                      onEditorReady={setEditor}
-                      initialContent={initialContent}
-                    />
-                  </div>
-                </div>
-              </div>
+                    <div className="notes-container mt-8">
+                      <div className="notes-header">
+                        <input
+                          className="border p-2 mb-4 w-full"
+                          placeholder="Note title"
+                          value={noteTitle}
+                          onChange={(e) => setNoteTitle(e.target.value)}
+                        />
+
+                        <button
+                          onClick={handleSaveClick}
+                          className="mt-4 bg-blue-600 text-white px-4 py-2 rounded"
+                        >
+                          Save
+                        </button>
+                      </div>
+                      <div className="notes-editor">
+                        <TipTapEditor
+                          onEditorReady={setEditor}
+                          initialContent={initialContent}
+                        />
+                      </div>
+                    </div>
+                  </>
+                )}
+              </Resizable>
             </div>
 
             <div className="ai-tools">

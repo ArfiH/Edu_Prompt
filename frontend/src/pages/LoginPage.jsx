@@ -10,10 +10,25 @@ export default function LoginPage() {
   const [guestLoading, setGuestLoading] = useState(false);
   const navigate = useNavigate();
 
+  
   const handleLogin = async () => {
     setLoading(true);
     setErrorMsg("");
+
+    
     try {
+      if (!email || !password) {
+        setErrorMsg("Please fill in all fields.");
+        setLoading(false);
+        return;
+      }
+
+      const emailRegex = /\S+@\S+\.\S+/;
+      if (!emailRegex.test(email)) {
+        setErrorMsg("Invalid email format.");
+        return;
+      }
+
       const res = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/auth/signin`,
         {

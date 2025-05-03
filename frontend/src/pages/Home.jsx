@@ -83,7 +83,7 @@ function Home() {
                 Discover the Joy of Learning
               </h1>
               <p className="text-xl mb-8 text-blue-100">
-                Explore thousands of educational videos from top instructors
+                Explore educational videos from top instructors
                 around the world. Learn at your own pace and expand your
                 knowledge.
               </p>
