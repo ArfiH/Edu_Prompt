@@ -40,7 +40,15 @@ router.post("/signin", async (req, res) => {
     }
 
     // const token = jwt.sign({ id: user._id }, prcoess.env.VITE_JWT_SECRET, { expiresIn: "1h" });
-    const token = jwt.sign({ id: user._id }, process.env.VITE_JWT_SECRET);
+    const jwtSecret = Buffer.from(process.env.VITE_JWT_SECRET, 'utf-8');
+    const token = jwt.sign(
+      { id: user._id.toString() },
+      jwtSecret,
+      { algorithm: 'HS256' }
+    );
+
+
+    // const token = jwt.sign({ id: user._id }, process.env.VITE_JWT_SECRET);
     res.json({ token, user: { name: user.name, email: user.email } });
   } catch (err) {
     res.status(500).json({ error: "Signin failed", details: err.message });
