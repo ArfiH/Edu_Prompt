@@ -14,6 +14,8 @@ export default function RegisterPage() {
 
   const handleGoogleSuccess = async (response) => {
     try {
+      console.log("Google signup response:", response);
+      
       // Get user info from Google
       const userInfo = await axios.get(
         'https://www.googleapis.com/oauth2/v3/userinfo',
@@ -21,6 +23,8 @@ export default function RegisterPage() {
           headers: { Authorization: `Bearer ${response.access_token}` },
         }
       );
+      
+      console.log("Google user info:", userInfo.data);
 
       // Send to backend
       const res = await axios.post(
@@ -32,18 +36,28 @@ export default function RegisterPage() {
         }
       );
 
+      console.log("Backend response:", res.data);
+
       localStorage.setItem("name", res.data.user.name);
       localStorage.setItem("token", res.data.token);
       window.location.href = "/";
     } catch (err) {
-      console.error('Google signup error:', err);
-      setErrorMsg("Google signup failed. Please try again.");
+      console.error('Google signup error details:', {
+        message: err.message,
+        response: err.response?.data,
+        status: err.response?.status
+      });
+      setErrorMsg(err.response?.data?.error || "Google signup failed. Please try again.");
     }
   };
 
   const login = useGoogleLogin({
     onSuccess: handleGoogleSuccess,
-    onError: () => setErrorMsg("Google signup failed. Please try again."),
+    onError: (error) => {
+      console.error('Google signup error:', error);
+      setErrorMsg("Google signup failed. Please try again.");
+    },
+    flow: 'implicit',
   });
 
   const handleRegister = async () => {
