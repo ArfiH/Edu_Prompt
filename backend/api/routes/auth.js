@@ -72,4 +72,40 @@ router.post("/guest", async (req, res) => {
   }
 });
 
+// POST /api/auth/google
+router.post("/google", async (req, res) => {
+  const { googleId, email, name } = req.body;
+  
+  try {
+    // Check if user already exists
+    let user = await User.findOne({ email });
+    
+    if (!user) {
+      // Create new user if doesn't exist
+      user = new User({
+        name,
+        email,
+        googleId,
+      });
+      await user.save();
+    } else if (!user.googleId) {
+      // Link Google account to existing user
+      user.googleId = googleId;
+      await user.save();
+    }
+
+    const jwtSecret = Buffer.from(process.env.VITE_JWT_SECRET, 'utf-8');
+    const token = jwt.sign(
+      { id: user._id.toString() },
+      jwtSecret,
+      { algorithm: 'HS256' }
+    );
+
+    res.json({ token, user: { name: user.name, email: user.email } });
+  } catch (err) {
+    console.error('Google auth error:', err);
+    res.status(500).json({ error: "Google authentication failed", details: err.message });
+  }
+});
+
 export default router;
