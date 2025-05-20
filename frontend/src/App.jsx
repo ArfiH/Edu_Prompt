@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import Header from "./component/Header";
@@ -16,23 +16,8 @@ import Channel from "./pages/Channel";
 const token = localStorage.getItem("token");
 
 function App() {
-  const [clientId, setClientId] = useState(null);
-
-  useEffect(() => {
-    const id = import.meta.env.VITE_GOOGLE_CLIENT_ID;
-    console.log("Google Client ID:", id); // Debug log
-    if (!id) {
-      console.error("Google Client ID is missing!");
-    }
-    setClientId(id);
-  }, []);
-
-  if (!clientId) {
-    return <div>Loading...</div>;
-  }
-
   return (
-    <GoogleOAuthProvider clientId={clientId}>
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
       <div className="app-container min-h-screen bg-gray-200">
         <Header />
         <main className="mt-[-2rem]">
