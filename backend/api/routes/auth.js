@@ -74,13 +74,23 @@ router.post("/guest", async (req, res) => {
 
 // POST /api/auth/google
 router.post("/google", async (req, res) => {
+  console.log("Received Google auth request:", req.body);
   const { googleId, email, name } = req.body;
+  
+  if (!googleId || !email || !name) {
+    console.error("Missing required fields:", { googleId, email, name });
+    return res.status(400).json({ 
+      error: "Missing required fields",
+      details: "googleId, email, and name are required"
+    });
+  }
   
   try {
     // Check if user already exists
     let user = await User.findOne({ email });
     
     if (!user) {
+      console.log("Creating new user for Google auth");
       // Create new user if doesn't exist
       user = new User({
         name,
@@ -89,6 +99,7 @@ router.post("/google", async (req, res) => {
       });
       await user.save();
     } else if (!user.googleId) {
+      console.log("Linking Google account to existing user");
       // Link Google account to existing user
       user.googleId = googleId;
       await user.save();
@@ -101,10 +112,18 @@ router.post("/google", async (req, res) => {
       { algorithm: 'HS256' }
     );
 
+    console.log("Google auth successful for user:", email);
     res.json({ token, user: { name: user.name, email: user.email } });
   } catch (err) {
-    console.error('Google auth error:', err);
-    res.status(500).json({ error: "Google authentication failed", details: err.message });
+    console.error('Google auth error:', {
+      message: err.message,
+      stack: err.stack,
+      code: err.code
+    });
+    res.status(500).json({ 
+      error: "Google authentication failed", 
+      details: err.message 
+    });
   }
 });
 

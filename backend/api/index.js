@@ -12,11 +12,20 @@ import watchRoutes from './routes/watch.js';
 dotenv.config();
 
 const app = express();
+
+// CORS configuration
 app.use(cors({
-  origin: "*",
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-})); // Allow CORS for all origins and methods
+  origin: [
+    'http://localhost:5173',
+    'https://edu-prompt.vercel.app',
+    'https://edu-prompt1.vercel.app',
+    'https://edu-prompt-arfihs-projects.vercel.app'
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
+}));
+
 app.use(express.json());
 
 const PORT = process.env.VITE_SERVER_PORT || 5000;
