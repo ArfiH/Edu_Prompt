@@ -12,6 +12,8 @@ export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  const backendUrl = import.meta.env.VITE_BACKEND_URL?.replace(/\/$/, '');
+
   const handleGoogleSuccess = async (response) => {
     try {
       console.log("Google signup response:", response);
@@ -26,9 +28,13 @@ export default function RegisterPage() {
       
       console.log("Google user info:", userInfo.data);
 
+      if (!backendUrl) {
+        throw new Error("Backend URL is not configured");
+      }
+
       // Send to backend
       const res = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/auth/google`,
+        `${backendUrl}/api/auth/google`,
         {
           googleId: userInfo.data.sub,
           email: userInfo.data.email,
@@ -45,7 +51,8 @@ export default function RegisterPage() {
       console.error('Google signup error details:', {
         message: err.message,
         response: err.response?.data,
-        status: err.response?.status
+        status: err.response?.status,
+        backendUrl
       });
       setErrorMsg(err.response?.data?.error || "Google signup failed. Please try again.");
     }
@@ -69,14 +76,13 @@ export default function RegisterPage() {
     }
 
     const emailRegex = /\S+@\S+\.\S+/;
-    const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9]).{8,}$/; // at least 8 characters, one uppercase letter, one number
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9]).{8,}$/;
     if (!emailRegex.test(email)) {
       setErrorMsg("Invalid email format.");
       return;
     }
 
     if (!passwordRegex.test(password)) {
-      // at least 8 characters
       if (password.length < 8) {
         setErrorMsg("Password must be at least 8 characters long.");
         return;
@@ -92,7 +98,11 @@ export default function RegisterPage() {
     }
 
     try {
-      await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/signup`, {
+      if (!backendUrl) {
+        throw new Error("Backend URL is not configured");
+      }
+
+      await axios.post(`${backendUrl}/api/auth/signup`, {
         name,
         email,
         password,

@@ -11,6 +11,8 @@ export default function LoginPage() {
   const [guestLoading, setGuestLoading] = useState(false);
   const navigate = useNavigate();
 
+  const backendUrl = import.meta.env.VITE_BACKEND_URL?.replace(/\/$/, '');
+
   const handleGoogleSuccess = async (response) => {
     try {
       console.log("Google login response:", response);
@@ -25,9 +27,13 @@ export default function LoginPage() {
       
       console.log("Google user info:", userInfo.data);
 
+      if (!backendUrl) {
+        throw new Error("Backend URL is not configured");
+      }
+
       // Send to backend
       const res = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/auth/google`,
+        `${backendUrl}/api/auth/google`,
         {
           googleId: userInfo.data.sub,
           email: userInfo.data.email,
@@ -44,7 +50,8 @@ export default function LoginPage() {
       console.error('Google login error details:', {
         message: err.message,
         response: err.response?.data,
-        status: err.response?.status
+        status: err.response?.status,
+        backendUrl
       });
       setErrorMsg(err.response?.data?.error || "Google login failed. Please try again.");
     }
@@ -63,7 +70,6 @@ export default function LoginPage() {
     setLoading(true);
     setErrorMsg("");
 
-    
     try {
       if (!email || !password) {
         setErrorMsg("Please fill in all fields.");
@@ -77,8 +83,12 @@ export default function LoginPage() {
         return;
       }
 
+      if (!backendUrl) {
+        throw new Error("Backend URL is not configured");
+      }
+
       const res = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/auth/signin`,
+        `${backendUrl}/api/auth/signin`,
         {
           email,
           password,
@@ -104,12 +114,16 @@ export default function LoginPage() {
   const handleGuestLogin = async () => {
     setGuestLoading(true);
     try {
+      if (!backendUrl) {
+        throw new Error("Backend URL is not configured");
+      }
+
       const res = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/auth/guest`
+        `${backendUrl}/api/auth/guest`
       );
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("name", res.data.user.name);
-      window.location.href = "/"; // Redirect to the home page
+      window.location.href = "/";
     } catch (err) {
       console.error("Guest login failed:", err);
       alert("Guest login failed. Please try again.");
