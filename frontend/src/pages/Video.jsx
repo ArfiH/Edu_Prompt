@@ -222,7 +222,7 @@ function Video() {
 
   return (
     <>
-      <main>
+      <main className="absolute inset-0 h-full w-full bg-white [background:radial-gradient(125%_125%_at_50%_10%,#fff_40%,#63e_100%)]">
         <div className="container">
           <div className="content-wrapper flex-container">
             <div className="video-section mt-8">
@@ -379,7 +379,7 @@ function Video() {
             help={help}
             flashcards={flashcards}
           />
-          <Recommendations />
+          {/* <Recommendations /> */}
         </div>
       </main>
     </>

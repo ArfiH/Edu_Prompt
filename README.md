@@ -21,6 +21,14 @@ Built for learners who struggle to organize information across YouTube videos, n
 
 ---
 
+## Screenshots
+![Screenshot (374)](https://github.com/user-attachments/assets/eee8889a-fb72-4c5a-b96f-b83504c4ee7e)
+![Screenshot (375)](https://github.com/user-attachments/assets/47fee54c-bef5-4380-bc88-a99b926fbb43)
+![Screenshot(377)](https://github.com/user-attachments/assets/95e9d40f-7a75-4aba-bb33-e5ca11903c15)
+![Screenshot (378)](https://github.com/user-attachments/assets/152bbdcf-eceb-4b75-9a63-e773d38fb315)
+![Screenshot (379)](https://github.com/user-attachments/assets/6b475401-4bfb-4795-9aad-9d81681624db)
+
+
 ## 🛠️ Tech Stack
 
 ### Core Technologies Used:
