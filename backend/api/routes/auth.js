@@ -58,10 +58,10 @@ router.post("/signin", async (req, res) => {
 // POST /api/auth/guest
 router.post("/guest", async (req, res) => {
   try {
+    const uniqueSuffix = `${Date.now()}_${Math.floor(Math.random() * 100000)}`;
     const guestUser = new User({
-      name: `Guest_${Date.now()}`,
-      email: `guest_${Date.now()}@eduprompt.com`,
-      password: "guest", 
+      name: `Guest_${uniqueSuffix}`,
+      email: `guest_${uniqueSuffix}@eduprompt.com`,
       isGuest: true,
     });
     await guestUser.save();
