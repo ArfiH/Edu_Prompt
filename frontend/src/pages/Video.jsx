@@ -175,8 +175,8 @@ function Video() {
             { headers: { Authorization: `Bearer ${token}` } }
           );
         } catch (err) {
-          handleLogout();
-          window.location.href = "/sign-in";
+          // handleLogout();
+          // window.location.href = "/sign-in";
           // navigate("/sign-in");
           console.error("Failed to update watch history", err);
         }
@@ -213,8 +213,8 @@ function Video() {
       console.log("Note saved successfully!");
     } catch (error) {
       console.error(error);
-      handleLogout();
-      window.location.href = "/sign-in";
+      // handleLogout();
+      // window.location.href = "/sign-in";
       // navigate("/sign-in");
       console.log("Failed to save note." + error);
     }

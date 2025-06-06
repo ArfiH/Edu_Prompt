@@ -172,7 +172,7 @@ function Home() {
             </div>
           ) : (
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
-              {watchHistory.map((video) => (
+              {watchHistory.length > 0 && watchHistory.map((video) => (
                 <a
                   key={video._id}
                   href={`/video/${video.videoId}`}

@@ -61,18 +61,20 @@ router.post("/guest", async (req, res) => {
     const guestName = `Guest_${Date.now()}`;
     const guestEmail = `guest_${Date.now()}@eduprompt.com`;
 
-    const guestUser = {
+    // Create and save guest user in MongoDB
+    const guestUser = new User({
       name: guestName,
       email: guestEmail,
       isGuest: true,
-    };
+    });
+    await guestUser.save();
 
     const token = jwt.sign(
-      { id: `guest_${Date.now()}`, isGuest: true },
+      { id: guestUser._id.toString(), isGuest: true },
       process.env.VITE_JWT_SECRET
     );
 
-    res.json({ token, user: guestUser });
+    res.json({ token, user: { name: guestUser.name, email: guestUser.email, isGuest: true } });
   } catch (err) {
     res.status(500).json({ error: "Guest login failed", details: err.message });
   }
