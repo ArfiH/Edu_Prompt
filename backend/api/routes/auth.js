@@ -7,7 +7,6 @@ dotenv.config();
 
 import User from "../models/User.js";
 const router = express.Router();
-console.log('Reachded backend');
 
 // POST /api/auth/signup
 router.post("/signup", async (req, res) => {
@@ -59,21 +58,15 @@ router.post("/signin", async (req, res) => {
 // POST /api/auth/guest
 router.post("/guest", async (req, res) => {
   try {
-    console.log('Trying to save guest user')
-    const uniqueSuffix = `${Date.now()}_${Math.floor(Math.random() * 100000)}`;
     const guestUser = new User({
-      name: `Guest_${uniqueSuffix}`,
-      email: `guest_${uniqueSuffix}@eduprompt.com`,
+      name: `Guest_${Date.now()}`,
+      email: `guest_${Date.now()}@eduprompt.com`,
+      password: "guest", 
       isGuest: true,
     });
     await guestUser.save();
-
-    const token = jwt.sign(
-      { id: guestUser._id.toString(), isGuest: true },
-      process.env.VITE_JWT_SECRET
-    );
-
-    res.json({ token, user: { name: guestUser.name, email: guestUser.email, isGuest: true } });
+    const token = jwt.sign({ id: guestUser._id }, process.env.VITE_JWT_SECRET);
+    res.json({ token, user: { name: guestUser.name, email: guestUser.email } });
   } catch (err) {
     res.status(500).json({ error: "Guest login failed", details: err.message });
   }
