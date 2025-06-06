@@ -176,7 +176,8 @@ function Video() {
           );
         } catch (err) {
           handleLogout();
-          navigate("/sign-in");
+          window.location.href = "/sign-in";
+          // navigate("/sign-in");
           console.error("Failed to update watch history", err);
         }
       };
@@ -213,7 +214,8 @@ function Video() {
     } catch (error) {
       console.error(error);
       handleLogout();
-      navigate("/sign-in");
+      window.location.href = "/sign-in";
+      // navigate("/sign-in");
       console.log("Failed to save note." + error);
     }
   };
@@ -222,7 +224,7 @@ function Video() {
 
   return (
     <>
-      <main className="absolute inset-0 h-full w-full bg-white [background:radial-gradient(125%_125%_at_50%_10%,#fff_40%,#63e_100%)]">
+      <main>
         <div className="container">
           <div className="content-wrapper flex-container">
             <div className="video-section mt-8">

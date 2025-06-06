@@ -108,7 +108,8 @@ export default function RegisterPage() {
         password,
       });
       console.log("Registration successful");
-      navigate("/sign-in");
+      window.location.href = "/sign-in";
+      // navigate("/sign-in");
     } catch (err) {
       if (err.message === "Request failed with status code 500") {
         setErrorMsg("User already exists. Please try a different email.");

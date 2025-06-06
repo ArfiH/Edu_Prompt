@@ -58,15 +58,21 @@ router.post("/signin", async (req, res) => {
 // POST /api/auth/guest
 router.post("/guest", async (req, res) => {
   try {
-    const guestUser = new User({
-      name: `Guest_${Date.now()}`,
-      email: `guest_${Date.now()}@eduprompt.com`,
-      password: "guest", 
+    const guestName = `Guest_${Date.now()}`;
+    const guestEmail = `guest_${Date.now()}@eduprompt.com`;
+
+    const guestUser = {
+      name: guestName,
+      email: guestEmail,
       isGuest: true,
-    });
-    await guestUser.save();
-    const token = jwt.sign({ id: guestUser._id }, process.env.VITE_JWT_SECRET);
-    res.json({ token, user: { name: guestUser.name, email: guestUser.email } });
+    };
+
+    const token = jwt.sign(
+      { id: `guest_${Date.now()}`, isGuest: true },
+      process.env.VITE_JWT_SECRET
+    );
+
+    res.json({ token, user: guestUser });
   } catch (err) {
     res.status(500).json({ error: "Guest login failed", details: err.message });
   }

@@ -20,7 +20,8 @@ function Home() {
 
   if (!token) {
     console.log("No token found in local storage.");
-    navigate("/sign-in");
+    window.location.href = "/sign-in";
+    // navigate("/sign-in");
   }
 
   useEffect(() => {
@@ -39,7 +40,8 @@ function Home() {
         setWatchHistory(data);
       } catch (err) {
         handleLogout();
-        navigate("/sign-in");
+        window.location.href = "/sign-in";
+        // navigate("/sign-in");
         console.error("Error fetching watch history:", err);
       }
     };
@@ -64,7 +66,8 @@ function Home() {
         setNotes(data);
       } catch (err) {
         handleLogout();
-        navigate("/sign-in");
+        window.location.href = "/sign-in";
+        // navigate("/sign-in");
         console.error("Failed to fetch notes:", err);
       }
     };
