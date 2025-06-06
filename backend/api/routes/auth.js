@@ -7,6 +7,7 @@ dotenv.config();
 
 import User from "../models/User.js";
 const router = express.Router();
+console.log('Reachded backend');
 
 // POST /api/auth/signup
 router.post("/signup", async (req, res) => {
@@ -58,13 +59,11 @@ router.post("/signin", async (req, res) => {
 // POST /api/auth/guest
 router.post("/guest", async (req, res) => {
   try {
-    const guestName = `Guest_${Date.now()}`;
-    const guestEmail = `guest_${Date.now()}@eduprompt.com`;
-
-    // Create and save guest user in MongoDB
+    console.log('Trying to save guest user')
+    const uniqueSuffix = `${Date.now()}_${Math.floor(Math.random() * 100000)}`;
     const guestUser = new User({
-      name: guestName,
-      email: guestEmail,
+      name: `Guest_${uniqueSuffix}`,
+      email: `guest_${uniqueSuffix}@eduprompt.com`,
       isGuest: true,
     });
     await guestUser.save();
